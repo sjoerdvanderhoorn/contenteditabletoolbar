@@ -1,7 +1,7 @@
 # ContentEditable Toolbar
 Adds a simple floating toolbar to contentEditable elements, without the need to add any properties in your HTML code.
 
-# Screenshot
+# Example
 
 ![contenteditabletoolbar](https://user-images.githubusercontent.com/24693534/218323621-9dca9837-5d1d-4eec-b59c-a8cfc1b2e261.png)
 
