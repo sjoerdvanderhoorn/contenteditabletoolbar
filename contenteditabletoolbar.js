@@ -25,10 +25,20 @@ var contentEditableToolbar = function(settings)
 	var buttonProperties =
 	[
 		{
+			code: "unformat", 
+			content: "x", 
+			title: "Remove all formatting",
+			selector: "unformat", 
+			action: function()
+			{
+				document.execCommand("removeFormat");
+			}
+		},
+		{
 			code: "bold", 
 			content: "B", 
 			title: "Bold",
-			element: "b",
+			selector: "b",
 			action: function()
 			{
 				document.execCommand("bold");
@@ -38,7 +48,7 @@ var contentEditableToolbar = function(settings)
 			code: "italic", 
 			content: "<i>I</i>", 
 			title: "Italic",
-			element: "i", 
+			selector: "i", 
 			action: function()
 			{
 				document.execCommand("italic");
@@ -48,17 +58,27 @@ var contentEditableToolbar = function(settings)
 			code: "underline", 
 			content: "<u>U</u>", 
 			title: "Underline",
-			element: "u", 
+			selector: "u", 
 			action: function()
 			{
 				document.execCommand("underline");
 			}
 		},
 		{
+			code: "strikethrough", 
+			content: "<s>S</s>", 
+			title: "Strike-through",
+			selector: "s", 
+			action: function()
+			{
+				document.execCommand("strikeThrough");
+			}
+		},
+		{
 			code: "link", 
 			content: "&zigrarr;", 
 			title: "Link",
-			element: "a",
+			selector: "a",
 			action: function()
 			{
 				// Find any link in the selection that may already exist.
@@ -99,7 +119,7 @@ var contentEditableToolbar = function(settings)
 			code: "ordered", 
 			content: "1.", 
 			title: "Ordered list", 
-			element: "ol",
+			selector: "ol",
 			action: function()
 			{
 				document.execCommand("insertOrderedList");
@@ -109,7 +129,7 @@ var contentEditableToolbar = function(settings)
 			code: "unordered", 
 			content: "*", 
 			title: "Unordered list", 
-			element: "ul",
+			selector: "ul",
 			action: function()
 			{
 				document.execCommand("insertUnorderedList");
@@ -119,20 +139,150 @@ var contentEditableToolbar = function(settings)
 			code: "quote", 
 			content: "&ldquo;", 
 			title: "Quote", 
-			element: "blockquote",
+			selector: "blockquote",
 			action: function()
 			{
 				formatBlock("blockquote");
 			}
 		},
 		{
-			code: "code", 
+			code: "pre", 
 			content: "&lt;/&gt;", 
-			title: "Code", 
-			element: "pre",
+			title: "Pre code block", 
+			selector: "pre",
 			action: function()
 			{
 				formatBlock("pre");
+			}
+		},
+		{
+			code: "code", 
+			content: "&lt;/&gt;", 
+			title: "Code", 
+			selector: "code",
+			action: function()
+			{
+				formatInline("code");
+			}
+		},
+		{
+			code: "color", 
+			content: "C", 
+			title: "Text color",
+			selector: "font", 
+			action: function()
+			{
+				document.execCommand("foreColor", false, prompt("Text color:"));
+			}
+		},
+		{
+			code: "background", 
+			content: "BG", 
+			title: "Background color",
+			selector: "span", 
+			action: function()
+			{
+				document.execCommand("backColor", false, prompt("Background color:"));
+			}
+		},
+		{
+			code: "h1", 
+			content: "H1", 
+			title: "H1 heading",
+			selector: "h1", 
+			action: function()
+			{
+				formatBlock("h1");
+			}
+		},
+		{
+			code: "h2", 
+			content: "H2", 
+			title: "H2 heading",
+			selector: "h2", 
+			action: function()
+			{
+				formatBlock("h2");
+			}
+		},
+		{
+			code: "h3", 
+			content: "H3", 
+			title: "H3 heading",
+			selector: "h3", 
+			action: function()
+			{
+				formatBlock("h3");
+			}
+		},
+		{
+			code: "h4", 
+			content: "H4", 
+			title: "H4 heading",
+			selector: "h4", 
+			action: function()
+			{
+				formatBlock("h4");
+			}
+		},
+		{
+			code: "h5", 
+			content: "H5", 
+			title: "H5 heading",
+			selector: "h5", 
+			action: function()
+			{
+				formatBlock("h5");
+			}
+		},
+		{
+			code: "h6", 
+			content: "H6", 
+			title: "H6 heading",
+			selector: "h6", 
+			action: function()
+			{
+				formatBlock("h6");
+			}
+		},
+		{
+			code: "left", 
+			content: "L", 
+			title: "Left align text",
+			selector: "p[style*='left']", 
+			action: function()
+			{
+				document.execCommand("justifyLeft");
+			}
+		},
+		{
+			code: "center", 
+			content: "C", 
+			title: "Center align text",
+			selector: "p[style*='center']", 
+			action: function()
+			{
+				document.execCommand("justifyCenter");
+			}
+		},
+		{
+			code: "right", 
+			content: "R", 
+			title: "Right align text",
+			selector: "p[style*='right']", 
+			action: function()
+			{
+				document.execCommand("justifyRight");
+			}
+		},
+		{
+			code: "justify", 
+			content: "J", 
+			title: "Justify align text",
+			selector: "p[style*='justify']", 
+			action: function()
+			{
+				document.execCommand("justifyFull");
 			}
 		},
 	];
@@ -170,7 +320,7 @@ var contentEditableToolbar = function(settings)
 	
 	function formatBlock(nodeName)
 	{
-		// Remove existing block
+		// Remove existing block.
 		var el = window.getSelection().baseNode;
 		while (el)
 		{
@@ -181,8 +331,30 @@ var contentEditableToolbar = function(settings)
 			}
 			el = el.parentNode;
 		}
-		// Add block
+		// Add block.
 		document.execCommand("formatBlock", false, nodeName.toLowerCase());
+	}
+
+	function formatInline(nodeName)
+	{
+		// Remove existing inline.
+		var el = window.getSelection().baseNode;
+		while (el)
+		{
+			if (el.nodeName.toLowerCase() == nodeName.toLowerCase())
+			{
+				el.outerHTML = el.innerHTML;
+				return;
+			}
+			el = el.parentNode;
+		}
+		// Add inline.
+		var selection = window.getSelection();
+		var range = selection.getRangeAt(0);
+		var wrapper = document.createElement(nodeName);
+		range.surroundContents(wrapper);
+		selection.removeAllRanges();
+		selection.addRange(range);
 	}
 	
 	// Listen for selection change events.
@@ -212,7 +384,7 @@ var contentEditableToolbar = function(settings)
 				{
 					settings.buttons.forEach(button =>
 					{
-						if (el.nodeName.toLowerCase() == button.properties.element)
+						if (el.matches && el.matches(button.properties.selector))
 						{
 							button.el.style.backgroundColor = "rgb(226,135,67)";
 						}

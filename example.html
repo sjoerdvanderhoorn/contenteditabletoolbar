@@ -4,7 +4,16 @@ window.addEventListener("load", function()
 {
 	contentEditableToolbar(
 	{
-		buttons: [{code: "bold"}, {code:"italic"}, {code:"underline"}, {code:"link"}, {code:"ordered"}, {code:"unordered"}, {code:"quote"}, {code:"code"}]
+		buttons: [
+			{code: "bold"}, {code: "italic"}, {code: "underline"}, {code: "strikethrough"}, 
+			{code: "link"}, 
+			{code: "ordered"}, {code: "unordered"}, 
+			{code: "quote"}, {code: "code"}, 
+			{code: "color"}, {code: "background"}, 
+			{code: "h1"}, {code: "h2"}, {code: "h3"}, {code: "h4"}, {code: "h5"}, {code: "h6"},
+			{code: "left"}, {code: "center"}, {code: "right"}, {code: "justify"},
+			{code: "unformat"}, 
+		]
 	});
 });
 </script>
@@ -19,6 +28,7 @@ window.addEventListener("load", function()
 	<p>Text <i>that is italic</i>.</p>
 	<p>Text <u>that is underlined</u>.</p>
 	<p>Text <u>that is <b>bold and underlined</b></u>.</p>
+	<p>Here is some <code>inline code</code>.</p>
 </div>
 
 <div contenteditable="true" role="textbox">
