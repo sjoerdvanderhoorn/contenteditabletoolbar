@@ -1,0 +1,28 @@
+<script src="contenteditabletoolbar.js"></script>
+<script>
+window.addEventListener("load", function()
+{
+	contentEditableToolbar(
+	{
+		buttons: ["bold", "italic", "underline", "link", "ordered", "unordered", "quote", "code"]
+	});
+});
+</script>
+
+<div>This text is NOT editable.</div>
+
+<textarea>This textarea will not show a toolbar.</textarea>
+
+<div contenteditable="true" role="textbox">
+	<p>This field is contentEditable.</p>
+	<p>Text <b>that is bold</b>.</p>
+	<p>Text <i>that is italic</i>.</p>
+	<p>Text <u>that is underlined</u>.</p>
+</div>
+
+<div contenteditable="true" role="textbox">
+	<p>Phasellus sed vestibulum nunc, id posuere nisi. Integer eu purus scelerisque est fringilla tristique non nec orci. Sed sodales orci quis velit consequat aliquet. Vestibulum nec lectus eu felis euismod blandit in non dolor. Curabitur vehicula arcu a eros molestie porttitor. Donec consequat sem purus, a sagittis ipsum auctor a. Nunc vehicula nulla non nibh semper egestas. Pellentesque sed est ut nulla lacinia hendrerit. Ut sed erat at lorem pretium fringilla.</p>
+	<p>Curabitur quis lacus nunc. Sed vitae elit et justo faucibus ullamcorper in ut lacus. Integer varius venenatis libero, at iaculis purus bibendum in. Nunc non ultricies ante, at facilisis urna. Praesent molestie tellus non semper bibendum. Mauris elementum, purus et malesuada interdum, augue purus varius magna, sit amet varius urna nibh non nulla. Nulla orci diam, sagittis ut consequat a, rutrum quis felis. Aenean ac vulputate dolor. Integer vel accumsan massa, sed elementum mauris. Phasellus aliquet, velit et condimentum tempus, odio elit vestibulum augue, vel venenatis magna nisi ac nunc. Donec non sem augue. Aliquam erat volutpat. Mauris pulvinar metus ac nulla dapibus, at hendrerit lacus feugiat. Suspendisse in semper velit.</p>
+	<p>Ut commodo augue vitae libero vestibulum pretium. Donec feugiat condimentum scelerisque. Maecenas porta at justo at accumsan. Donec non magna non nisi fermentum euismod. Mauris non commodo tellus, vel sollicitudin ex. Maecenas suscipit laoreet orci, quis blandit nisi eleifend eu. Donec faucibus sed libero quis condimentum. In in congue eros, quis tincidunt enim. Vestibulum pulvinar mauris venenatis nisi sagittis, a facilisis lorem placerat. Maecenas aliquet odio ac dolor ultrices condimentum. Sed pretium dui id odio ultricies, quis ultrices mi sollicitudin. Ut rhoncus sagittis auctor. Vivamus eu mi in lacus facilisis luctus. Fusce malesuada eu lorem a sollicitudin.</p>
+	<p>Fusce ac lacus velit. Maecenas tincidunt et libero et fringilla. Proin et erat a lacus lobortis lobortis. Aenean vitae fringilla arcu, sagittis dictum turpis. Proin pretium ante dui, sed porttitor nulla feugiat eu. Pellentesque dictum molestie mi id rhoncus. Pellentesque sed arcu in mauris dictum fringilla id at purus. Mauris velit diam, mattis id gravida eu, pharetra in libero. Nullam pellentesque sed elit eu gravida. Donec vitae est leo. Mauris commodo risus viverra, convallis orci eu, sodales erat. Proin scelerisque lorem a eros blandit, vel congue ipsum eleifend. Aliquam facilisis augue dolor, sed pulvinar elit tincidunt a. Nulla egestas nisi nec nibh cursus, eget lobortis nisi fringilla. Nullam tortor risus, malesuada vitae metus a, feugiat volutpat orci.</p>
+</div>
