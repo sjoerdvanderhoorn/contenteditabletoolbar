@@ -13,6 +13,7 @@ var contentEditableToolbar = function(settings)
 	toolbar.style.cssText = `
 		display: none;
 		position: absolute;
+		z-index: 99999;
 		background-color: rgba(21, 76, 121, 0.8);
 		border-radius: 28px;
 		padding: 8px;
@@ -27,6 +28,7 @@ var contentEditableToolbar = function(settings)
 			code: "bold", 
 			content: "B", 
 			title: "Bold",
+			element: "b",
 			action: function()
 			{
 				document.execCommand("bold");
@@ -35,7 +37,8 @@ var contentEditableToolbar = function(settings)
 		{
 			code: "italic", 
 			content: "<i>I</i>", 
-			title: "Italic", 
+			title: "Italic",
+			element: "i", 
 			action: function()
 			{
 				document.execCommand("italic");
@@ -44,7 +47,8 @@ var contentEditableToolbar = function(settings)
 		{
 			code: "underline", 
 			content: "<u>U</u>", 
-			title: "Underline", 
+			title: "Underline",
+			element: "u", 
 			action: function()
 			{
 				document.execCommand("underline");
@@ -54,6 +58,7 @@ var contentEditableToolbar = function(settings)
 			code: "link", 
 			content: "&zigrarr;", 
 			title: "Link",
+			element: "a",
 			action: function()
 			{
 				// Find any link in the selection that may already exist.
@@ -94,6 +99,7 @@ var contentEditableToolbar = function(settings)
 			code: "ordered", 
 			content: "1.", 
 			title: "Ordered list", 
+			element: "ol",
 			action: function()
 			{
 				document.execCommand("insertOrderedList");
@@ -103,6 +109,7 @@ var contentEditableToolbar = function(settings)
 			code: "unordered", 
 			content: "*", 
 			title: "Unordered list", 
+			element: "ul",
 			action: function()
 			{
 				document.execCommand("insertUnorderedList");
@@ -112,6 +119,7 @@ var contentEditableToolbar = function(settings)
 			code: "quote", 
 			content: "&ldquo;", 
 			title: "Quote", 
+			element: "blockquote",
 			action: function()
 			{
 				formatBlock("blockquote");
@@ -121,6 +129,7 @@ var contentEditableToolbar = function(settings)
 			code: "code", 
 			content: "&lt;/&gt;", 
 			title: "Code", 
+			element: "pre",
 			action: function()
 			{
 				formatBlock("pre");
@@ -129,14 +138,15 @@ var contentEditableToolbar = function(settings)
 	];
 	
 	// Add buttons to toolbar.
-	settings.buttons.forEach(buttonCode =>
+	settings.buttons.forEach(button =>
 	{
-		var buttonProperty = buttonProperties.find(b => b.code == buttonCode);
-		var el = document.createElement("button");
+		var buttonProperty = buttonProperties.find(b => b.code == button.code);
+		button.properties = buttonProperty;
+		button.el = document.createElement("button");
 		// Set button properties.
-		el.innerHTML = buttonProperty.content;
-		el.title = buttonProperty.title;
-		el.style.cssText = `
+		button.el.innerHTML = buttonProperty.content;
+		button.el.title = buttonProperty.title;
+		button.el.style.cssText = `
 			min-width: 34px;
 			height: 34px;
 			border: none;
@@ -149,9 +159,9 @@ var contentEditableToolbar = function(settings)
 			font-weight: bold;
 			text-align: center;
 		`;
-		toolbar.appendChild(el);
+		toolbar.appendChild(button.el);
 		// Process click event.
-		el.onclick = function()
+		button.el.onclick = function()
 		{
 			buttonProperty.action();
 			return false;
@@ -191,6 +201,24 @@ var contentEditableToolbar = function(settings)
 				toolbar.style.display = "block";
 				toolbar.style.left = parseInt(rects[0].left) + "px";
 				toolbar.style.top = parseInt(window.scrollY + rects[0].top + rects[0].height) + "px";
+				// Reset all button colors.
+				settings.buttons.forEach(button =>
+					{
+						button.el.style.backgroundColor = "rgba(118, 181, 197, 1)";
+					})
+				// Toggle buttons based on selection.
+				var el = range.startContainer;
+				while (el)
+				{
+					settings.buttons.forEach(button =>
+					{
+						if (el.nodeName.toLowerCase() == button.properties.element)
+						{
+							button.el.style.backgroundColor = "rgb(226,135,67)";
+						}
+					});
+					el = el.parentNode;
+				}
 				// Wait until the contentEditable field no longer has focus, then hide the toolbar.
 				event.target.activeElement.addEventListener("focusout", (event) =>
 				{
