@@ -1,9 +1,9 @@
-# ContentEditable Toolbar
-Adds a simple floating toolbar to contentEditable elements, without the need to add any extra properties to your HTML code. As text is selected, a popup toolbar shows, allowing the user to format the selection. The toolbar displays the current formatting that is applied and follows the cursor. 
+# ContentEditableToolbar
+Adds a simple floating toolbar to contentEditable elements, without the need to add any extra properties to your HTML code. As text is selected, the floating toolbar shows, allowing the user to format the selection. The toolbar displays the current formatting that is applied and follows the cursor. 
 
-# Example
+# Screenshot
 
-![contenteditabletoolbar](https://user-images.githubusercontent.com/24693534/218323621-9dca9837-5d1d-4eec-b59c-a8cfc1b2e261.png)
+![contenteditabletoolbar](contenteditabletoolbar.png)
 
 # Usage
 
