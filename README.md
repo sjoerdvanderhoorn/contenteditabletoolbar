@@ -5,8 +5,8 @@ Adds a simple floating toolbar to contentEditable elements, without the need to 
 
 Add the lines of code to your HTML. Adjust the settings as desired.
 
-```
-<script src="contenteditabletoolbar.js"></script>
+```html
+<script src="https://cdn.jsdelivr.net/gh/sjoerdvanderhoorn/contenteditabletoolbar/contenteditabletoolbar.js"></script>
 <script>
 window.addEventListener("load", function()
 {
