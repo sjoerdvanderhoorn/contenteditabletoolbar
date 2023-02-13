@@ -1,12 +1,25 @@
 var contentEditableToolbar = function(settings)
 {
-	// Load default settings when settings are missing.
+
+	// Default settings.
+	defaultSettings = {
+		button: {
+			textColor: "rgba(255, 255, 255, 1)",
+			backgroundColor: "rgba(118, 181, 197, 1)",
+			selectedTextColor: "rgba(255, 255, 255, 1)",
+			selectedBackgroundColor: "rgba(226, 135, 67, 1)"
+		},
+		buttons: [{code:"bold"}, {code:"italic"}, {code:"underline"}, {code:"link"}, {code:"ordered"}, {code:"unordered"}, {code:"quote"}, {code:"code"}]
+	}
 	if (!settings)
 	{
-		settings = {
-			buttons: ["bold", "italic", "underline", "link", "ordered", "unordered", "quote", "code"]
-		}
+		settings = {}
 	}
+
+	// Overlay default settings over provided settings.
+	settings.button = Object.assign(defaultSettings.button, settings.button);
+	settings.buttons = Object.assign(defaultSettings.buttons, settings.buttons);
+	
 	
 	// Define toolbar.
 	var toolbar = document.createElement("div");
@@ -294,16 +307,16 @@ var contentEditableToolbar = function(settings)
 		button.properties = buttonProperty;
 		button.el = document.createElement("button");
 		// Set button properties.
-		button.el.innerHTML = buttonProperty.content;
-		button.el.title = buttonProperty.title;
+		button.el.innerHTML = button.content ?? buttonProperty.content;
+		button.el.title = button.title ?? buttonProperty.title;
 		button.el.style.cssText = `
 			min-width: 34px;
 			height: 34px;
 			border: none;
 			border-radius: 20px;
 			margin: 4px;
-			color: #ffffff;
-			background-color: rgba(118, 181, 197, 1);
+			color: ${settings.button.textColor};
+			background-color: ${settings.button.backgroundColor};
 			font-family: 'Courier New', monospace;
 			font-size: 20px;
 			font-weight: bold;
@@ -376,7 +389,8 @@ var contentEditableToolbar = function(settings)
 				// Reset all button colors.
 				settings.buttons.forEach(button =>
 					{
-						button.el.style.backgroundColor = "rgba(118, 181, 197, 1)";
+						button.el.style.color = settings.button.textColor;
+						button.el.style.backgroundColor = settings.button.backgroundColor;
 					})
 				// Toggle buttons based on selection.
 				var el = range.startContainer;
@@ -386,7 +400,8 @@ var contentEditableToolbar = function(settings)
 					{
 						if (el.matches && el.matches(button.properties.selector))
 						{
-							button.el.style.backgroundColor = "rgb(226,135,67)";
+							button.el.style.color = settings.button.selectedTextColor;
+							button.el.style.backgroundColor = settings.button.selectedBackgroundColor;
 						}
 					});
 					el = el.parentNode;
